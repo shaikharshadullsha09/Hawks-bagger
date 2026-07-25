@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawk's Bagger - Premium Shirts Collection</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #4ecdc4;
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #4ecdc4;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%231a1a2e" width="1200" height="600"/><path fill="%234ecdc4" opacity="0.1" d="M0 300 Q300 100 600 300 T1200 300 V600 H0 Z"/></svg>');
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(78,205,196,0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) skewX(-15deg); }
+            100% { transform: translateX(100%) skewX(-15deg); }
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255,107,107,0.6);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Filters Section */
+        .filters {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-select {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            background: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            box-shadow: 0 0 20px rgba(78,205,196,0.2);
+        }
+
+        /* Products Grid */
+        .products-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #1a1a2e, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            height: 300px;
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .product-card:hover .product-image::before {
+            left: 100%;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .product-rating {
+            display: flex;
+            gap: 0.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-rating i {
+            color: #ffd700;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-to-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+
+        /* About Section */
+        .about-section {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .owner-info {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-top: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 6rem 2rem;
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            min-width: 250px;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #4ecdc4;
+            transform: translateY(-5px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Hawk's Bagger</div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Premium Shirts Collection</h1>
+            <p>Discover the perfect blend of style, comfort, and quality</p>
+            <a href="#products" class="cta-button">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <div class="filters">
+        <div class="filter-group">
+            <label>Sort by:</label>
+            <select class="filter-select" id="sortFilter">
+                <option>Featured</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+                <option>Newest</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Size:</label>
+            <select class="filter-select" id="sizeFilter">
+                <option>All Sizes</option>
+                <option>S</option>
+                <option>M</option>
+                <option>L</option>
+                <option>XL</option>
+                <option>XXL</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Color:</label>
+            <select class="filter-select" id="colorFilter">
+                <option>All Colors</option>
+                <option>White</option>
+                <option>Black</option>
+                <option>Blue</option>
+                <option>Grey</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label>Price:</label>
+            <select class="filter-select" id="priceFilter">
+                <option>All Prices</option>
+                <option>Under ₹1000</option>
+                <option>₹1000 - ₹2000</option>
+                <option>Over ₹2000</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+        <h2 class="section-title">Our Collection</h2>
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be loaded here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-content">
+            <h2>About Hawk's Bagger</h2>
+            <p>Premium quality shirts crafted with precision and style. Experience the perfect combination of comfort, durability, and fashion that defines Hawk's Bagger.</p>
+            <div class="owner-info">
+                <h3>Founder & Designer</h3>
+                <p><strong>Shaik Harshadulla Sha</strong></p>
+                <p><strong>RRN: 250171601105</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="contact-content">
+            <h2 class="section-title">Get In Touch</h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem;">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h3>Phone</h3>
+                        <p><strong>9121809991</strong></p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h3>Email</h3>
+                        <p>info@hawksbagger.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h3>Location</h3>
+                        <p>India</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-links">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <p>&copy; 2024 Hawk's Bagger. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Product Data
+        const products = [
+            { id: 1, name: "Classic White Shirt", price: 1299, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400", rating: 4.8, size: "M", color: "White" },
+            { id: 2, name: "Slim Fit Black", price: 1499, image: "https://images.unsplash.com/photo-1593778451990-0bb61e786e62?w=400", rating: 4.9, size: "L", color: "Black" },
+            { id: 3, name: "Blue Oxford", price: 1399, image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400", rating: 4.7, size: "XL", color: "Blue" },
+            { id: 4, name: "Grey Formal", price: 1699, image: "https://images.unsplash.com/photo-1586744819701-13c8b0ea9e15?w=400", rating: 4.9, size: "M", color: "Grey" },
+            { id: 5, name: "White Linen", price: 1899, image: "https://images.unsplash.com/photo-1624778326212-472b5a0e7618?w=400", rating: 4.6, size: "S", color: "White" },
+            { id: 6, name: "Navy Blue", price: 1599, image: "https://images.unsplash.com/photo-1602813049754-147f8fbe4b94?w=400", rating: 4.8, size: "XXL", color: "Blue" },
+            { id: 7, name: "Casual Check", price: 1199, image: "https://images.unsplash.com/photo-1595182801209-68491b727e62?w=400", rating: 4.7, size: "L", color: "Multi" },
+            { id: 8, name: "Premium Black", price: 1999, image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400", rating: 5.0, size: "XL", color: "Black" }
+        ];
+
+        let cartCount = 0;
+        let filteredProducts = [...products];
+
+        // DOM Elements
+        const productsGrid = document.getElementById('productsGrid');
+        const cartCountEl = document.getElementById('cartCount');
+        const sortFilter = document.getElementById('sortFilter');
+        const sizeFilter = document.getElementById('sizeFilter');
+        const colorFilter = document.getElementById('colorFilter');
+        const priceFilter = document.getElementById('priceFilter');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+            setupFilters();
+            setupSmoothScroll();
+            setupIntersectionObserver();
+        });
+
+        // Render Products
+        function renderProducts(productsToRender = filteredProducts) {
+            productsGrid.innerHTML = productsToRender.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">${product.name}</h3>
+                        <div class="product-price">₹${product.price}</div>
+                        <div class="product-rating">
+                            ${'★'.repeat(Math.floor(product.rating)).padEnd(5, '☆')}
+                            <span>(${product.rating})</span>
+                        </div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">
+                            <span id="cart-btn-${product.id}">Add to Cart</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add to Cart
+        function addToCart(productId) {
+            const button = document.getElementById(`cart-btn-${productId}`);
+            button.innerHTML = '<span class="loading"></span> Adding...';
+            
+            setTimeout(() => {
+                cartCount++;
+                cartCountEl.textContent = cartCount;
+                button.innerHTML = 'Added! ✓';
+                button.style.background = 'linear-gradient(45deg, #4ecdc4, #45b7d1)';
+                
+                setTimeout(() => {
+                    button.innerHTML = 'Add to Cart';
+                    button.style.background = 'linear-gradient(45deg, #ff6b6b, #4ecdc4)';
+                }, 2000);
+            }, 1000);
+        }
+
+        // Filter Setup
+        function setupFilters() {
+            sortFilter.addEventListener('change', applyFilters);
+            sizeFilter.addEventListener('change', applyFilters);
+            colorFilter.addEventListener('change', applyFilters);
+            priceFilter.addEventListener('change', applyFilters);
+        }
+
+        function applyFilters() {
+            let results = [...products];
+
+            // Size filter
+            const size = sizeFilter.value;
+            if (size !== 'All Sizes') {
+                results = results.filter(p => p.size === size);
+            }
+
+            // Color filter
+            const color = colorFilter.value;
+            if (color !== 'All Colors') {
+                results = results.filter(p => p.color === color);
+            }
+
+            // Price filter
+            const price = priceFilter.value;
+            if (price === 'Under ₹1000') {
+                results = results.filter(p => p.price < 1000);
+            } else if (price === '₹1000 - ₹2000') {
+                results = results.filter(p => p.price >= 1000 && p.price <= 2000);
+            } else if (price === 'Over ₹2000') {
+                results = results.filter(p => p.price > 2000);
+            }
+
+            // Sort
+            const sort = sortFilter.value;
+            if (sort === 'Price: Low to High') {
+                results.sort((a, b) => a.price - b.price);
+            } else if (sort === 'Price: High to Low') {
+                results.sort((a, b) => b.price - a.price);
+            } else if (sort === 'Newest') {
+                results.sort((a, b) => b.id - a.id);
+            }
+
+            filteredProducts = results;
+            renderProducts(results);
+        }
+
+        // Smooth Scroll
+        function setupSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        }
+
+        // Intersection Observer for animations
+        function setupIntersectionObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.product-card, .section-title, .contact-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(50px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 26, 46, 0.95)';
+                header.style.backdropFilter = 'blur(20px)';
+            } else {
+                header.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+    <!-- Quick Product Wishlist Feature -->
+<script>
+let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+
+function toggleWishlist(productId, productName) {
+    const index = wishlist.findIndex(p => p.id === productId);
+    if (index > -1) {
+        wishlist.splice(index, 1);
+        document.getElementById(`wish-${productId}`).innerHTML = '♡';
+    } else {
+        wishlist.push({id: productId, name: productName});
+        document.getElementById(`wish-${productId}`).innerHTML = '♥';
+    }
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+}
+
+// Add to product card template (replace the product-info div):
+// <div class="product-actions" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+//     <div class="wishlist" onclick="toggleWishlist(${product.id}, '${product.name}')" id="wish-${product.id}">♡</div>
+// </div>
+</script>
+
+<!-- PWA Ready - Save as HomeScreen -->
+<link rel="manifest" href="data:application/manifest+json,{
+  \"name\": \"Hawk's Bagger\",
+  \"short_name\": \"HawksBagger\",
+  \"start_url\": \".\",
+  \"display\": \"standalone\",
+  \"background_color\": \"#1a1a2e\",
+  \"theme_color\": \"#4ecdc4\",
+  \"icons\": [{
+    \"src\": \"data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiBmaWxsPSIjNEVDREM0Ii8+Cjx0ZXh0IHg9Ijk2IiB5PSIxMDUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIzMCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkhCPC90ZXh0Pgo8L3N2Zz4=\",
+    \"sizes\": \"192x192\",
+    \"type\": \"image/svg+xml\"
+  }]
+}">
+<meta name="theme-color" content="#4ecdc4">
+</body>
+</html>
